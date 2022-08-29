@@ -4,7 +4,7 @@ metadata:
   name: success-rate
 spec:
   args:
-  - name: service-name
+  - name: ingress 
   metrics:
   - name: success-rate
     interval: 1m
