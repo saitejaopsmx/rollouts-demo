@@ -31,7 +31,7 @@ spec:
         templates:
         - templateName: success-rate
         args:
-        - name: service-name
+        - name: ingress
           value: canary-demo
       trafficRouting:
         nginx:
