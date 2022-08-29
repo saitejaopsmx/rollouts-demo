@@ -33,6 +33,9 @@ spec:
         args:
         - name: service-name
           value: canary-demo
+      trafficRouting:
+        nginx:
+          stableIngress: canary-demo
       canaryService: canary-demo-preview
       steps:
       - setWeight: 20
