@@ -4,17 +4,14 @@ metadata:
   name: success-rate
 spec:
   args:
-  - name: ingress
+  - name: service-name
   metrics:
   - name: success-rate
     interval: 10s
     successCondition: result[0] > 0.90
     provider:
       prometheus:
-        address: http://prometheus-operator-prometheus.prometheus-operator:9090
-        query: >+
-          sum(
-            rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",status!~"[4-5].*"}[20s]))
-            /
-            sum(rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}"}[20s])
-          )
+        address: http://argo-prometheus-server:80
+        query: |
+          sum(irate(nginx_ingress_controller_requests{service=~"{{args.service-name}}",status!~"[4-5].*"}[5m])) /
+          sum(irate(nginx_ingress_controller_requests{service=~"{{args.service-name}}"}[5m]))

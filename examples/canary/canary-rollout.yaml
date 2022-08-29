@@ -31,7 +31,7 @@ spec:
         templates:
         - templateName: success-rate
         args:
-        - name: ingress
+        - name: service-name
           value: canary-demo
       canaryService: canary-demo-preview
       steps:
