@@ -37,6 +37,7 @@ spec:
         nginx:
           stableIngress: canary-demo
       canaryService: canary-demo-preview
+      stableService: canary-demo
       steps:
       - setWeight: 20
       - pause: {}
