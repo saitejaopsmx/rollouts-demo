@@ -27,6 +27,11 @@ spec:
             cpu: 5m
   strategy:
     canary:
+      analysis:
+        templateName: success-rate
+        args:
+        - name: ingress
+          value: canary-demo
       canaryService: canary-demo-preview
       steps:
       - setWeight: 20
