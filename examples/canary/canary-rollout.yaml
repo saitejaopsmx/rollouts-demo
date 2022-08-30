@@ -4,7 +4,26 @@ metadata:
   name: canary-demo
 spec:
   replicas: 5
-  revisionHistoryLimit: 1
+  strategy:
+    canary:
+      analysis:
+        templates:
+        - templateName: success-rate
+        args:
+        - name: ingress
+          value: canary-demo
+      canaryService: canary-demo-preview
+      stableService: canary-demo
+      steps:
+      - setWeight: 20
+      - pause: {}
+      - setWeight: 40
+      - pause: {duration: 10}
+      - setWeight: 60
+      - pause: {duration: 10}
+      - setWeight: 80
+      - pause: {duration: 10}
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       app: canary-demo
@@ -25,25 +44,3 @@ spec:
           requests:
             memory: 32Mi
             cpu: 5m
-  strategy:
-    canary:
-      analysis:
-        templates:
-        - templateName: success-rate
-        args:
-        - name: ingress
-          value: canary-demo
-      trafficRouting:
-        nginx:
-          stableIngress: canary-demo
-      canaryService: canary-demo-preview
-      stableService: canary-demo
-      steps:
-      - setWeight: 20
-      - pause: {}
-      - setWeight: 40
-      - pause: {duration: 10}
-      - setWeight: 60
-      - pause: {duration: 10}
-      - setWeight: 80
-      - pause: {duration: 10}
